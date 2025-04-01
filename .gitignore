@@ -1,0 +1,44 @@
+# === BACKEND PYTHON ===
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+.venv/
+venv/
+.env.*
+
+# FastAPI & Uvicorn logs
+*.log
+
+# === FRONTEND ===
+*.DS_Store
+node_modules/
+dist/
+build/
+
+# === TERRAFORM ===
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+crash.log
+override.tf
+override.tf.json
+terraform.tfvars
+*.tfvars.json
+
+# === EC2 setup ===
+*.zip
+*.sh~
+*.bak
+
+# === IDE & OS SPECIFIC ===
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+.DS_Store
+
+# === OUTPUT / TESTS ===
+logs/
+tmp/
