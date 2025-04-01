@@ -24,7 +24,7 @@ pip3 install -r requirements.txt
 nohup uvicorn main:app --host 0.0.0.0 --port 8000 &
 
 # Copier le site web dans le dossier public nginx
-sudo cp ../frontend/index.html /usr/share/nginx/html/index.html
+sudo cp ../frontend/index.html /usr/share/nginx/html/index_blue.html
 
 # (Optionnel) Donner les bons droits
 sudo chown nginx:nginx /usr/share/nginx/html/index.html
