@@ -37,3 +37,8 @@ async def get_comments(sectionId: str):
         ScanIndexForward=False
     )
     return response['Items']
+
+# Health check
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
