@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projet d'Alternance</title>
+  <style>
+    :root {
+      --primary-color: #00bfff;
+      --bg-dark: #0e0e0e;
+      --bg-overlay: rgba(0, 0, 0, 0.6);
+      --header-bg: rgba(25, 25, 25, 0.95);
+      --card-radius: 12px;
+      --shadow-glow: 0 0 12px rgba(0, 191, 255, 0.4);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #f5f5f5;
+      background-color: var(--bg-dark);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://i.ibb.co/D0ftjkC/background-tech.png');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      z-index: -1;
+      opacity: 0.15;
+    }
+
+    header {
+      background-color: var(--header-bg);
+      padding: 40px 20px 30px;
+      text-align: center;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .logo-img {
+      width: 100px;
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.2em;
+      color: var(--primary-color);
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      background-color: #121212;
+      padding: 15px 0;
+      box-shadow: inset 0 -1px 0 var(--primary-color);
+    }
+
+    nav button {
+      background-color: transparent;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    nav button:hover {
+      background-color: var(--primary-color);
+      color: #0e0e0e;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .content {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+      background-color: var(--bg-overlay);
+      border-radius: var(--card-radius);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    }
+
+    section {
+      display: none;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    h2 {
+      color: var(--primary-color);
+      margin-top: 0;
+    }
+
+    footer {
+      margin-top: 60px;
+      padding: 30px;
+      background-color: #111;
+      text-align: center;
+      color: #999;
+      font-size: 0.9em;
+      border-top: 1px solid #222;
+    }
+
+    .comment-section {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #333;
+    }
+
+    .comment-section h3 {
+      color: var(--primary-color);
+    }
+
+    .comment-section input[type="text"],
+    .comment-section textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      border: 1px solid #444;
+      background: #1e1e1e;
+      color: #fff;
+    }
+
+    .comment-section button {
+      background: var(--primary-color);
+      color: #0e0e0e;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .comment-section button:hover {
+      background: #00a0e0;
+    }
+
+    .comment-list {
+      margin-top: 20px;
+    }
+
+    .comment-meta {
+      font-size: 0.8em;
+      color: #bbb;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://i.ibb.co/qM7KHhHg/logo-aa-detoure.png" alt="Logo AA" class="logo-img" />
+    <h1>Projets d'Alternance</h1>
+  </header>
+
+  <nav>
+    <button onclick="showSection('accueil')">Accueil</button>
+    <button onclick="showSection('projet1')">Architecture Sécurisée AWS</button>
+    <button onclick="showSection('projet2')">IaC sur AWS</button>
+    <button onclick="showSection('projet3')">CI/CD avec GitHub</button>
+  </nav>
+
+  <div class="content">
+    <section id="accueil" class="active">
+      <h2>Bienvenue</h2>
+      <p>Ce site a pour but de regrouper et de présenter les projets réalisés dans le cadre de mon alternance sur deux ans. Il s'agit de projets à fort enjeu technologique, majoritairement centrés sur l'architecture Cloud, la sécurité, l'automatisation et les bonnes pratiques DevOps. Vous trouverez ici une synthèse de chaque projet, ses objectifs, son avancement, ainsi que les compétences mobilisées.</p>
+    </section>
+
+    <section id="projet1">
+      <h2>Définir et proposer une Architecture sécurisée sur AWS</h2>
+      <p>Ce projet vise à concevoir une architecture Cloud sur AWS répondant à des exigences de sécurité avancées : gestion des identités, segmentation réseau, chiffrement des données, journalisation, etc. L'objectif est d'appliquer les bonnes pratiques AWS Well-Architected Framework et de livrer une infrastructure robuste, scalable et sécurisée.</p>
+      <div class="comment-section" id="comments-projet1">
+        <h3>Laisser un commentaire</h3>
+        <input type="text" id="pseudo-input-projet1" placeholder="Votre pseudo">
+        <textarea id="comment-input-projet1" rows="4" placeholder="Votre commentaire..."></textarea>
+        <button onclick="submitComment('projet1')">Envoyer</button>
+        <div class="comment-list" id="comment-list-projet1"></div>
+      </div>
+    </section>
+
+    <section id="projet2">
+      <h2>Déploiement automatisé (IaC) en environnement Cloud AWS</h2>
+      <p>Ce projet repose sur l'automatisation du déploiement d'infrastructures Cloud à l'aide de l'approche Infrastructure as Code (IaC). En utilisant des outils comme Terraform ou AWS CloudFormation, l'objectif est de garantir des environnements reproductibles, contrôlés et facilement maintenables dans le temps.</p>
+      <div class="comment-section" id="comments-projet2">
+        <h3>Laisser un commentaire</h3>
+        <input type="text" id="pseudo-input-projet2" placeholder="Votre pseudo">
+        <textarea id="comment-input-projet2" rows="4" placeholder="Votre commentaire..."></textarea>
+        <button onclick="submitComment('projet2')">Envoyer</button>
+        <div class="comment-list" id="comment-list-projet2"></div>
+      </div>
+    </section>
+
+    <section id="projet3">
+      <h2>Déploiement d'infrastructure via CICD (Github)</h2>
+      <p>Ce projet a pour objectif d'intégrer les outils d'automatisation et de déploiement continu (CI/CD) avec GitHub Actions. L'infrastructure sera déployée automatiquement à chaque mise à jour du code source, assurant ainsi une intégration continue, des tests automatisés et un déploiement fluide vers des environnements Cloud.</p>
+      <div class="comment-section" id="comments-projet3">
+        <h3>Laisser un commentaire</h3>
+        <input type="text" id="pseudo-input-projet3" placeholder="Votre pseudo">
+        <textarea id="comment-input-projet3" rows="4" placeholder="Votre commentaire..."></textarea>
+        <button onclick="submitComment('projet3')">Envoyer</button>
+        <div class="comment-list" id="comment-list-projet3"></div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    &copy; 2025 - Antony Ceccaroli. Tous droits réservés. | Site personnel réalisé dans le cadre de l'alternance.
+  </footer>
+
+  <script>
+    function showSection(id) {
+      const sections = document.querySelectorAll('section');
+      sections.forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+    }
+
+    function submitComment(sectionId) {
+      const textarea = document.getElementById(`comment-input-${sectionId}`);
+      const pseudoInput = document.getElementById(`pseudo-input-${sectionId}`);
+      const comment = textarea.value.trim();
+      const pseudo = pseudoInput.value.trim();
+      if (!comment || !pseudo) return;
+
+      const now = new Date();
+      const day = now.getDate().toString().padStart(2, '0');
+      const month = (now.getMonth() + 1).toString().padStart(2, '0');
+      const year = now.getFullYear().toString().slice(-2);
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const date = `${day}/${month}/${year} ${hours}:${minutes}`;
+
+      const list = document.getElementById(`comment-list-${sectionId}`);
+      const div = document.createElement('div');
+      div.style.marginBottom = '10px';
+      div.style.padding = '10px';
+      div.style.background = '#222';
+      div.style.borderRadius = '6px';
+      div.innerHTML = `<strong>${pseudo}</strong><br>${comment}<div class="comment-meta">${date}</div>`;
+      list.prepend(div);
+
+      textarea.value = '';
+      pseudoInput.value = '';
+    }
+  </script>
+</body>
+</html>
