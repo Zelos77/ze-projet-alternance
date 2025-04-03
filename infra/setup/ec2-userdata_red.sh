@@ -1,12 +1,24 @@
 #!/bin/bash
+exec > /var/log/user-data.log 2>&1
+set -x
+
 # Mise à jour du système
-sudo dnf update -y
+dnf update -y
 
 # Installation de nginx
-sudo dnf install -y nginx
+dnf install -y git nginx python3-pip
 
-# Création d'une page d'accueil simple
-sudo echo "<h1>Bienvenue sur mon instance EC2 - RED - $(hostname)</h1>" > /usr/share/nginx/html/index.html
+# Aller dans le dossier utilisateur
+cd /home/ec2-user
+
+# Cloner la branche main du dépôt GitHub
+git clone --branch main https://github.com/Zelos77/ze-projet-alternance.git
+
+cd ze-projet-alternance/backend
+pip3 install -r requirements.txt
+
+# Copier le site web dans le dossier public nginx
+cp -f /home/ec2-user/ze-projet-alternance/frontend/index_red.html /usr/share/nginx/html/index.html
 
 # Activation et démarrage du service nginx
 systemctl enable nginx
