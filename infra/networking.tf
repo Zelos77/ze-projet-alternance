@@ -220,7 +220,7 @@ resource "aws_elb" "ze_elb" {
   connection_draining_timeout = 400
 
   tags = {
-    Name = "foobar-terraform-elb"
+    Name = "ze-projet-alternance-terraform-elb"
   }
 }
 
