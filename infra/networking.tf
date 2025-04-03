@@ -126,38 +126,9 @@ resource "aws_network_acl" "ze_acl" {
   }
 }
 
-###############################################
-# Ingress Rules
-###############################################
-
-# Autoriser retour HTTPS (SSM)
-resource "aws_network_acl_rule" "ingress_https_return" {
-  network_acl_id = aws_network_acl.ze_acl.id
-  rule_number    = 100
-  egress         = false
-  protocol       = "tcp"
-  rule_action    = "allow"
-  cidr_block     = "0.0.0.0/0"
-  from_port      = 1024
-  to_port        = 65535
-}
-
-# (Optionnel) Autoriser SSH depuis ton IP
-resource "aws_network_acl_rule" "ingress_ssh" {
-  network_acl_id = aws_network_acl.ze_acl.id
-  rule_number    = 110
-  egress         = false
-  protocol       = "tcp"
-  rule_action    = "allow"
-  cidr_block     = "165.225.20.165/32" # Remplace par ton IP publique
-  from_port      = 22
-  to_port        = 22
-}
-
-# (Optionnel) Autoriser HTTP (web nginx)
 resource "aws_network_acl_rule" "ingress_http" {
   network_acl_id = aws_network_acl.ze_acl.id
-  rule_number    = 120
+  rule_number    = 100 # <-- Numéro plus petit = évalué en premier
   egress         = false
   protocol       = "tcp"
   rule_action    = "allow"
@@ -165,15 +136,41 @@ resource "aws_network_acl_rule" "ingress_http" {
   from_port      = 80
   to_port        = 80
 }
+resource "aws_network_acl_rule" "ingress_ssh" {
+  network_acl_id = aws_network_acl.ze_acl.id
+  rule_number    = 110
+  egress         = false
+  protocol       = "tcp"
+  rule_action    = "allow"
+  cidr_block     = "165.225.20.165/32"
+  from_port      = 22
+  to_port        = 22
+}
 
-###############################################
-# Egress Rules
-###############################################
+resource "aws_network_acl_rule" "ingress_ephemere" {
+  network_acl_id = aws_network_acl.ze_acl.id
+  rule_number    = 120
+  egress         = false
+  protocol       = "tcp"
+  rule_action    = "allow"
+  cidr_block     = "0.0.0.0/0"
+  from_port      = 1024
+  to_port        = 65535
+}
+resource "aws_network_acl_rule" "egress_http" {
+  network_acl_id = aws_network_acl.ze_acl.id
+  rule_number    = 100
+  egress         = true
+  protocol       = "tcp"
+  rule_action    = "allow"
+  cidr_block     = "0.0.0.0/0"
+  from_port      = 80
+  to_port        = 80
+}
 
-# Autoriser HTTPS vers endpoints SSM
 resource "aws_network_acl_rule" "egress_https" {
   network_acl_id = aws_network_acl.ze_acl.id
-  rule_number    = 200
+  rule_number    = 110
   egress         = true
   protocol       = "tcp"
   rule_action    = "allow"
@@ -182,14 +179,13 @@ resource "aws_network_acl_rule" "egress_https" {
   to_port        = 443
 }
 
-# (Optionnel) Autoriser tout egress HTTP (yum, apt, etc.)
-resource "aws_network_acl_rule" "egress_http" {
+resource "aws_network_acl_rule" "egress_ephemere" {
   network_acl_id = aws_network_acl.ze_acl.id
-  rule_number    = 210
+  rule_number    = 120
   egress         = true
   protocol       = "tcp"
   rule_action    = "allow"
   cidr_block     = "0.0.0.0/0"
-  from_port      = 80
-  to_port        = 80
+  from_port      = 1024
+  to_port        = 65535
 }
