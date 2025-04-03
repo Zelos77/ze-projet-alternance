@@ -1,4 +1,4 @@
-# Projet d'alternance - Zelos77
+# Projet d'alternance
 
 Bienvenue sur le dépôt **Zelos77/ze-projet-alternance**, qui regroupe le site web, l'API et les scripts de déploiement de mon projet d'alternance. Ce projet est hébergé sur une infrastructure aws
 **Attention, les ressources utilisées sont payantes**
