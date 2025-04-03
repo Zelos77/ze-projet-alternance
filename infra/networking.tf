@@ -189,3 +189,41 @@ resource "aws_network_acl_rule" "egress_ephemere" {
   from_port      = 1024
   to_port        = 65535
 }
+
+# Create a new load balancer
+resource "aws_elb" "ze_elb" {
+  name               = "ze-elb-projet-alternance"
+  subnets            = [aws_subnet.ze_pubsbn_1.id, aws_subnet.ze_pubsbn_2.id]
+  security_groups    = [aws_security_group.ze_sg.id]
+
+
+
+  listener {
+    instance_port     = 80
+    instance_protocol = "http"
+    lb_port           = 80
+    lb_protocol       = "http"
+  }
+
+  health_check {
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 3
+    target              = "HTTP:80/"
+    interval            = 30
+  }
+
+  instances                   = [aws_instance.ze_instance_blue.id, aws_instance.ze_instance_red.id]
+  cross_zone_load_balancing   = true
+  idle_timeout                = 400
+  connection_draining         = true
+  connection_draining_timeout = 400
+
+  tags = {
+    Name = "foobar-terraform-elb"
+  }
+}
+
+output "dns_name" {
+  value = aws_elb.ze_elb.dns_name
+}
