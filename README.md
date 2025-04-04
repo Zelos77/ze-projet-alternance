@@ -75,8 +75,7 @@ boto3
 
 ---
 
-## 🧑‍💻 Auteur
-**Antony Ceccaroli** — Projet personnel dans le cadre de l’alternance (cloud/devops)
+## 🧑‍💻 Projet personnel dans le cadre de l’alternance (cloud/devops)
 
 GitHub : [Zelos77](https://github.com/Zelos77)
 
