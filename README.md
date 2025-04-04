@@ -1,81 +1,56 @@
-# Projet d'alternance
+# Projet Alternance – Infrastructure AWS avec Terraform
 
-Bienvenue sur le dépôt **Zelos77/ze-projet-alternance**, qui regroupe le site web, l'API et les scripts de déploiement de mon projet d'alternance. Ce projet est hébergé sur une infrastructure aws
-**Attention, les ressources utilisées sont payantes**
-
-## 📁 Structure du projet
-
-```
-ze-projet-alternance/
-├── backend/       # API FastAPI pour la gestion des commentaires
-├── frontend/      # Site HTML statique (page principale + commentaires)
-├── setup/         # Script d'installation EC2 (user-data)
-├── infra/         # TODO - IaC avec Terraform
-```
+Ce projet définit une infrastructure AWS minimaliste mais évolutive, déployée avec Terraform, permettant d'héberger des instances dans une architecture réseau bien structurée. Il constitue une base solide pour un projet cloud évolutif.
 
 ---
 
-## 🔧 Fonctionnalités principales
+## 🔧 Composants Principaux
 
-### 🌐 Frontend (`/frontend/index.html`)
-- Page web moderne (dark theme, tech/cloud design)
-- Présentation des projets d’alternance sur 2 ans
-- Sections :
-  - Architecture sécurisée AWS
-  - Infrastructure as Code (IaC)
-  - CI/CD avec GitHub
-- Chaque section intègre un espace de **commentaires** avec :
-  - Saisie pseudo + commentaire
-  - Affichage date au format `DD/MM/YY HH:MM`
-  - Affichage du plus récent en haut
+### Réseau
+- Un **VPC privé** configuré manuellement avec un CIDR `/24`
+- Deux sous-réseaux **publics** et deux **privés**, répartis sur deux zones de disponibilité
+- Une table de routage publique redirigeant le trafic vers Internet via une Internet Gateway
+- Des **ACLs** configurés manuellement pour contrôler l'accès réseau (SSH, HTTP, HTTPS, ports éphémères)
+- Des **Security Groups** restreints, n’autorisant que le minimum nécessaire
 
-### 🚀 Backend (`/backend/main.py`)
-- API FastAPI en cours de mise en place (WIP)
-- 2 routes prévues :
-  - `POST /commentaires` → enregistrement dans DynamoDB
-  - `GET /commentaires?sectionId=...` → récupération triée
+### Instances EC2
+### Scripts de configuration des instances (user_data)
 
-### 📜 Setup EC2 (`/setup/ec2-userdata.sh`)
-- Script `user-data` pour instance EC2 Ubuntu
-- Actions :
-  - Installation des paquets nécessaires (Python, pip, git...)
-  - Clonage du dépôt GitHub
-  - Installation des dépendances Python
-  - Démarrage automatique de l'API FastAPI avec `uvicorn`
-  - Déploiement du site HTML dans `/var/www/html`
+Chaque instance EC2 est automatiquement configurée grâce à un script `user_data`. Ces scripts réalisent les actions suivantes :
 
----
+- Mise à jour complète du système via `dnf`
+- Installation de `nginx`, `git` et `python3-pip`
+- Clonage du dépôt GitHub `ze-projet-alternance` (branche `main`)
+- Installation des dépendances Python pour le backend
+- Déploiement du fichier HTML correspondant à l'instance :
+  - `index_blue.html` pour l’instance **blue**
+  - `index_red.html` pour l’instance **red**
+- Démarrage et activation du service NGINX
 
-## ⚙️ Déploiement sur AWS EC2 (résumé)
+Ces scripts assurent que chaque instance est prête à servir une page web personnalisée dès le lancement.
+- Deux instances (`ze_instance_blue`, `ze_instance_red`) dans les subnets publics
+- Sont intégrées au système **AWS Systems Manager (SSM)** pour l'administration sans SSH
 
-1. Lancer une instance EC2 Ubuntu 22.04
-2. Ouvrir les ports 22, 80, 443 et 8000 dans le groupe de sécurité
-3. Ajouter le contenu de `setup/ec2-userdata.sh` dans le champ **User data**
-4. Accéder au site via `http://<IP-EC2>`
-5. L’API est disponible sur `http://<IP-EC2>:8000/commentaires`
+### Load Balancer
+- Un **Elastic Load Balancer (Classic)** distribue le trafic HTTP vers les deux instances
+- Health checks activés pour garantir la disponibilité
+
+### Sécurité & IAM
+- Un rôle IAM avec permissions SSM est attaché à chaque instance via un **Instance Profile**
 
 ---
 
-## 📦 Dépendances (backend)
-Fichier `backend/requirements.txt` :
-```txt
-fastapi
-uvicorn
-boto3
-```
+## 🌍 Accès
+Une fois le déploiement terminé, l’output `dns_name` affiche le nom DNS du ELB, à utiliser sur le port `:8000` pour accéder à l’application hébergée.
+Il est possible de prouver le bon fonctionnement du loab balancer en appuyant de façon répétée sur F5.
+La page changera de couleur, ce qui démontre que le site s'affiche sur une instance ou une autre.
 
 ---
 
-## 🛠️ Prochaines étapes
-- [ ] Connecter le frontend à l’API
-- [ ] Stocker les commentaires dans DynamoDB
-- [ ] Ajouter HTTPS avec Let's Encrypt
-- [ ] Ajout d'un nom de domaine via Route 53
-- [ ] CI/CD GitHub Actions (optionnel)
+## 📦 Évolution future prévue
+Le code est prêt à évoluer, avec des sous-réseaux privés en place pour héberger des services non exposés (bases de données, backends, etc.). Il est également possible d’ajouter :
+- Un NAT Gateway pour permettre aux instances privées de sortir vers Internet
+- Des groupes Auto Scaling
+- Une couche RDS/DynamoDB, S3, Lambda, eventbridge etc.
 
----
-
-## 🧑‍💻 Projet personnel dans le cadre de l’alternance (cloud/devops)
-
-GitHub : [Zelos77](https://github.com/Zelos77)
-
+## Diagramme de l'architecture au stade actuel :
