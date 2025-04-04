@@ -54,3 +54,4 @@ Le code est prêt à évoluer, avec des sous-réseaux privés en place pour héb
 - Une couche RDS/DynamoDB, S3, Lambda, eventbridge etc.
 
 ## Diagramme de l'architecture au stade actuel :
+![alt text](https://github.com/Zelos77/ze-projet-alternance/blob/main/infra/Diagramme_projet_alternance.jpg?raw=true)
