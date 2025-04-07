@@ -17,8 +17,8 @@ resource "aws_instance" "ze_instance_blue" {
 }
 
 resource "aws_instance" "ze_instance_red" {
-  ami                         = "ami-0446057e5961dfab6"
-  instance_type               = "t2.micro"
+  ami                         = var.eu_ami
+  instance_type               = var.instance_type
   availability_zone           = var.az_euw[1]
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.ze_pubsbn_2.id
