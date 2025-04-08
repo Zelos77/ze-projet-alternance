@@ -5,7 +5,7 @@ resource "aws_instance" "ze_instance_blue" {
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.ze_pubsbn_1.id
   iam_instance_profile        = aws_iam_instance_profile.ze_ssm_profile.id
-  security_groups             = [aws_security_group.ze_sg.id]
+  security_groups             = [aws_security_group.ze_instances_sg.id]
   user_data                   = file("${path.module}/setup/ec2-userdata_blue.sh")
 
 
@@ -23,7 +23,7 @@ resource "aws_instance" "ze_instance_red" {
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.ze_pubsbn_2.id
   iam_instance_profile        = aws_iam_instance_profile.ze_ssm_profile.id
-  security_groups             = [aws_security_group.ze_sg.id]
+  security_groups             = [aws_security_group.ze_instances_sg.id]
   user_data                   = file("${path.module}/setup/ec2-userdata_red.sh")
 
 

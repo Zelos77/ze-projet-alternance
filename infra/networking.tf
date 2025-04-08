@@ -63,7 +63,7 @@ resource "aws_route_table" "pub_route_table" {
   vpc_id = aws_vpc.ze_vpc.id
 
   route {
-    cidr_block = var.all_ip
+    cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.ze_igw.id
   }
 
@@ -132,7 +132,7 @@ resource "aws_network_acl_rule" "ingress_http" {
   egress         = false
   protocol       = "tcp"
   rule_action    = "allow"
-  cidr_block     = var.all_ip
+  cidr_block     = "0.0.0.0/0"
   from_port      = 80
   to_port        = 80
 }
@@ -153,7 +153,7 @@ resource "aws_network_acl_rule" "ingress_ephemere" {
   egress         = false
   protocol       = "tcp"
   rule_action    = "allow"
-  cidr_block     = var.all_ip
+  cidr_block     = "0.0.0.0/0"
   from_port      = 1024
   to_port        = 65535
 }
@@ -163,7 +163,7 @@ resource "aws_network_acl_rule" "egress_http" {
   egress         = true
   protocol       = "tcp"
   rule_action    = "allow"
-  cidr_block     = var.all_ip
+  cidr_block     = "0.0.0.0/0"
   from_port      = 80
   to_port        = 80
 }
@@ -174,7 +174,7 @@ resource "aws_network_acl_rule" "egress_https" {
   egress         = true
   protocol       = "tcp"
   rule_action    = "allow"
-  cidr_block     = var.all_ip
+  cidr_block     = "0.0.0.0/0"
   from_port      = 443
   to_port        = 443
 }
@@ -185,7 +185,7 @@ resource "aws_network_acl_rule" "egress_ephemere" {
   egress         = true
   protocol       = "tcp"
   rule_action    = "allow"
-  cidr_block     = var.all_ip
+  cidr_block     = "0.0.0.0/0"
   from_port      = 1024
   to_port        = 65535
 }
@@ -194,7 +194,7 @@ resource "aws_network_acl_rule" "egress_ephemere" {
 resource "aws_elb" "ze_elb" {
   name            = "ze-elb-projet-alternance"
   subnets         = [aws_subnet.ze_pubsbn_1.id, aws_subnet.ze_pubsbn_2.id]
-  security_groups = [aws_security_group.ze_sg.id]
+  security_groups = [aws_security_group.ze_instances_sg.id]
 
 
 
