@@ -4,6 +4,12 @@ Ce projet définit une infrastructure AWS minimaliste mais évolutive, déployé
 
 ---
 
+## Utilisation :
+- Cloner le repo
+- Dans /infra utilisez les commandes terraform init, terraform plan, terraform apply
+- L'output dns_name ze-elb-projet-alternance-[ID].eu-west-3.elb.amazonaws.com/ est à utiliser en http:// afin de se connecter au load balancer.
+- Le fonctionnement du load balancer est confirmé en appuyant de manière répétée sur F5 (Un site bleu et un site rouge s'alterneront)
+
 ## 🔧 Composants Principaux
 
 ### Réseau
@@ -54,4 +60,4 @@ Le code est prêt à évoluer, avec des sous-réseaux privés en place pour héb
 - Une couche RDS/DynamoDB, S3, Lambda, eventbridge etc.
 
 ## Diagramme de l'architecture au stade actuel :
-![alt text](https://github.com/Zelos77/ze-projet-alternance/blob/main/infra/Diagramme.jpg?raw=true)
+![alt text](https://github.com/Zelos77/ze-projet-alternance/blob/main/infra/diagramme.jpg?raw=true)
