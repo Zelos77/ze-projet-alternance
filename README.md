@@ -47,7 +47,7 @@ Ces scripts assurent que chaque instance est prête à servir une page web perso
 ---
 
 ## 🌍 Accès
-Une fois le déploiement terminé, l’output `dns_name` affiche le nom DNS du ELB, à utiliser sur le port `:8000` pour accéder à l’application hébergée.
+Une fois le déploiement terminé, l’output `dns_name` affiche le nom DNS du ELB, à utiliser sur le port `:80` pour accéder à l’application hébergée.
 Il est possible de prouver le bon fonctionnement du loab balancer en appuyant de façon répétée sur F5.
 La page changera de couleur, ce qui démontre que le site s'affiche sur une instance ou une autre.
 
