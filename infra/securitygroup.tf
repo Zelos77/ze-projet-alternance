@@ -52,7 +52,7 @@ resource "aws_vpc_security_group_ingress_rule" "instances_ssh" {
   ip_protocol       = "tcp"
   from_port         = 22
   to_port           = 22
-  cidr_ipv4         = "165.225.20.174/32"
+  cidr_ipv4         = "165.225.20.175/32"
 }
 
 resource "aws_vpc_security_group_egress_rule" "instances_http_out" {
