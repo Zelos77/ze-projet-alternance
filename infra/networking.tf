@@ -190,11 +190,10 @@ resource "aws_network_acl_rule" "egress_ephemere" {
   to_port        = 65535
 }
 
-# Create a new load balancer
 resource "aws_elb" "ze_elb" {
   name            = "ze-elb-projet-alternance"
   subnets         = [aws_subnet.ze_pubsbn_1.id, aws_subnet.ze_pubsbn_2.id]
-  security_groups = [aws_security_group.ze_instances_sg.id]
+  security_groups = [aws_security_group.ze_elb_sg.id]
 
 
 
