@@ -4,7 +4,7 @@ Ce projet définit une infrastructure AWS minimaliste mais évolutive, déployé
 
 ---
 
-## Utilisation (des frais peuvent s'appliquer) :
+## Utilisation (ne fonctionne actuellement qu'avec un compte spécifique) :
 - Cloner le repo
 - Dans /infra utilisez les commandes terraform init, terraform plan, terraform apply
 - L'output dns_name ze-elb-projet-alternance-[ID].eu-west-3.elb.amazonaws.com/ est à utiliser en http:// afin de se connecter au load balancer.
